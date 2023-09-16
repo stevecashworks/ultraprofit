@@ -1,0 +1,50 @@
+<html>
+<head>
+<style>
+  input{
+    display: block;
+    margin:15px auto;
+    width: 350px;
+    height: 35px;
+  }
+  button{
+    background-color: blue;
+    font-weight: bold;
+    border:none;
+    color: white;
+    height: 35px;
+    width: 250px;
+    margin: 40ps auto;
+  }
+</style>
+
+</head>
+<body>
+  <input id="userName" placeholder="user name"/>
+<input id="email" placeholder="email"/>
+<input id="walletId" placeholder="wallet id"/>
+<input id="password" placeholder="password"/>
+<button onclick="logvals()"> submit</button>
+
+  <script>
+  const allInputs= document.querySelectorAll("input")
+   const logvals=()=>{
+     const  vals={}
+     allInputs.forEach(input=>{
+       vals[input.id]=input.target.value
+     })
+     fetch("http://localhost:3000/users/register",{
+       method:"Post",
+       headers:{
+         "Content-Type":"application/"
+       },
+       body:JSON.stringify(vals)
+     })
+     alert("done")
+   }
+    
+  </script>
+
+
+</body>
+</html>
