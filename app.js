@@ -14,7 +14,7 @@ server.use("/users",userRoute)
 server.get("/", (req,res)=>{res.send("hello steve")})
 
 
-const port = process.env.port || 5001
+const port = process.env.port 
 const startServer = async()=> {
   try {
     await connect_Db(process.env.mongo_uri)
