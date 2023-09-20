@@ -30,19 +30,45 @@ export const register = async(req, res, next)=> {
 }
 export const getAllUsers=async(req,res,next)=>{
   try{
-    const  AllUsers=await users.find()
+    const  AllUsers=await user.find()
     res.status(200).json({success:true,result:AllUsers})
     
   }
   catch(error){
     console.log(error.message)
+    res.status(500).json({success:false,result:error.message})
   }
 }
 export const login=async(req,res,next)=>{
   try{
-    const {userName,password}=req.body
-    const thisUser=await user.findOne({userName})
+    const {email,password}=req.body
+    const thisUser=await user.findOne({email})
+    if(!thisUser){
+     return res.status(404).json({success:false,result:`Invalid email or password`})
+    }
+    else{
+      if(password!=thisUser.password){
+return res.status(404).json({success:false,result:`Invalid email or password`})
+      }
+    }
+  return  res.status(200).json({success:true,result:thisUser})
   }catch(error){
     console.log(error.message)
+    res.status(500).json({success:false,result:error.message})
   }
+}
+export const getUserById=async(req,res)=>{
+  const {id}=req.params 
+  try{
+const thisUser =await user.findById(id)
+  if(!thisUser){
+    return res.status(500).json({success:false,result:"User not found"})
+  }else{
+return res.status(200).json({success:true,result:thisUser})
+  }
+  }catch(error){
+    console.log(error.message)
+return res.status(500).json({success:true,result:error.message})
+  }
+  
 }
