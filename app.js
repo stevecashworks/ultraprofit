@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import connect_Db from "./Connect_db.js"
 import cors from "cors"
 import userRoute from "./Routes/Users/userRoute.js"
+import SendUserError from "./sendUserError.js"
 dotenv.config()
 
 const server = express()
@@ -12,6 +13,7 @@ server.use(express.json())
 server.use(cors())
 server.use("/users",userRoute)
 server.get("/", (req,res)=>{res.send("hello steve")})
+server.use(SendUserError)
 
 
 const port = process.env.port 

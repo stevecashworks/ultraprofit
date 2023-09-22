@@ -2,6 +2,7 @@ import user from "../../Models/Usermodel.js"
 import sendMail from "./Sendmail.js"
 import getCode from "./generateCode.js"
 import appendCodeToHtml from "./Template.js"
+// import { getLogger } from "nodemailer/lib/shared/index.js"
 const dropusers=async()=>{
   await user.deleteMany()
   console.log("users deleted")
@@ -13,9 +14,9 @@ export const register = async(req, res, next)=> {
   try{
    const code=getCode()
     const newUser = await user.create(req.body)
-    const response= await sendMail(req.body.email,`Welcome aboard ${req.body.userName},\n
-    Your verification code is ${code}
-    `,appendCodeToHtml(code,req.body.userName))
+    const response= await sendMail(req.body.email,`Welcome  ${req.body.userName},\n
+    Your verification code is:  ${code}
+    `,appendCodeToHtml(code,req.body.userName),res)
     console.log(response)
     res.status(200).json({
       success: true, result: {...newUser._doc,code}

@@ -1,10 +1,10 @@
 import nodemailer from "nodemailer"
 const ultraprofitPassword="orszoubuiadnynpu"
   const ultraprofitEmail="ulltraprofitcompany@gmail.com"
-  
+  import errorHandler from "./handleError.js"
 
 
- const sendMail=(email,message,html)=>{
+ const sendMail=(email,message,html,res)=>{
        const transporter=nodemailer.createTransport({
           service:'gmail',
           auth:{
@@ -22,7 +22,7 @@ const ultraprofitPassword="orszoubuiadnynpu"
           transporter.sendMail(options,(err,info)=>{
              if(err){
                 console.log(err);
-                throw new error(err.message)
+                errorHandler(err,{res}) 
                 return;
              }else{
                 return info.response
@@ -31,3 +31,4 @@ const ultraprofitPassword="orszoubuiadnynpu"
         }
  
  export default sendMail
+ 
