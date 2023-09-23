@@ -3,6 +3,9 @@ const code=[]
 const getCode=()=>{
 for(let i=0;i<6;i++){
   code.push(digits[Math.floor(Math.random()*digits.length)])
+  if(code.length===6){
+    break;
+  }
 }
 return code.join("")
 }
