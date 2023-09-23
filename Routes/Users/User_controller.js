@@ -5,6 +5,13 @@ import appendCodeToHtml from "./Template.js"
 import createCustomError from "../../createCustomError.js"
 import getResetTemplate from "./resetTemplate.js"
  // delete all users (development only)
+ const shorten=(str)=>{
+  if(str.length>6){
+    return(str.substr(0,6))
+  }
+  return str
+ }
+
 const dropusers=async()=>{
   await user.deleteMany()
   console.log("users deleted")
@@ -16,12 +23,12 @@ export const register = async(req, res, next)=> {
   try{
     
    const code=getCode()
-   const response= await sendMail(req.body.email,appendCodeToHtml(code,req.body.userName),next)
+   shortCode=shorten(code)
+   const response= await sendMail(req.body.email,appendCodeToHtml(shortCode,req.body.userName),next)
    const newUser = await user.create(req.body)
-   
-    console.log(response)
+  
 return    res.status(200).json({
-      success: true, result: {...newUser._doc,code}
+      success: true, result: {...newUser._doc,shortCode}
     })
   }catch(error) {
     console.log(error.message)
