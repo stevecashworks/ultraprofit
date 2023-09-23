@@ -23,7 +23,7 @@ export const register = async(req, res, next)=> {
   try{
     
    const code=getCode()
-   shortCode=shorten(code)
+   const shortCode=shorten(code)
    const response= await sendMail(req.body.email,appendCodeToHtml(shortCode,req.body.userName),next)
    const newUser = await user.create(req.body)
   
