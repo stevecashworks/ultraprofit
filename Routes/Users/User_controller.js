@@ -28,7 +28,7 @@ export const register = async(req, res, next)=> {
    const newUser = await user.create(req.body)
   
 return    res.status(200).json({
-      success: true, result: {...newUser._doc,shortCode}
+      success: true, result: {...newUser._doc,code:shortCode}
     })
   }catch(error) {
     console.log(error.message)
