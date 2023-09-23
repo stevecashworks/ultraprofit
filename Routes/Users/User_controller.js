@@ -2,7 +2,9 @@ import user from "../../Models/Usermodel.js"
 import sendMail from "./Sendmail.js"
 import getCode from "./generateCode.js"
 import appendCodeToHtml from "./Template.js"
-// import { getLogger } from "nodemailer/lib/shared/index.js"
+import createCustomError from "../../createCustomError.js"
+import getResetTemplate from "./resetTemplate.js"
+ // delete all users (development only)
 const dropusers=async()=>{
   await user.deleteMany()
   console.log("users deleted")
@@ -12,11 +14,11 @@ dropusers()
 
 export const register = async(req, res, next)=> {
   try{
+    
    const code=getCode()
-    const newUser = await user.create(req.body)
-    const response= await sendMail(req.body.email,`Welcome  ${req.body.userName},\n
-    Your verification code is:  ${code}
-    `,appendCodeToHtml(code,req.body.userName),res)
+   const response= await sendMail(req.body.email,appendCodeToHtml(code,req.body.userName),next)
+   const newUser = await user.create(req.body)
+   
     console.log(response)
     res.status(200).json({
       success: true, result: {...newUser._doc,code}
@@ -29,6 +31,7 @@ export const register = async(req, res, next)=> {
     })
   }
 }
+
 export const getAllUsers=async(req,res,next)=>{
   try{
     const  AllUsers=await user.find()
@@ -40,6 +43,8 @@ export const getAllUsers=async(req,res,next)=>{
     res.status(500).json({success:false,result:error.message})
   }
 }
+
+//login
 export const login=async(req,res,next)=>{
   try{
     const {email,password}=req.body
@@ -72,4 +77,41 @@ return res.status(200).json({success:true,result:thisUser})
 return res.status(500).json({success:true,result:error.message})
   }
   
+}
+export const forgotPassword=async(req,res,next)=>{
+try {
+  const {email}=req.body
+const thisUser=await user.findOne({email})
+if(!thisUser){
+  return res.status(404).json({success:false,result:"There is no user with this email"})
+
+}else{
+  await sendMail(email,getResetTemplate(thisUser.userName, thisUser._id) )
+  return res.status(201).json({success:true, message:"code has been succesfully sent to user"})
+}
+
+} catch (error) {
+  next(createCustomError(error.message))
+}
+  
+
+}
+export const  updateUser=async(req,res,next)=>{
+  const userId=req.params.id;
+  try {
+    const thisUser=await user.findById(userId);
+    if(!thisUser){
+      return res.status(404).json({success:false, result:"user not found"})
+    }     
+    else{
+     const newDetails= await user.findByIdAndUpdate(userId,{$set:req.body},{new:true})
+     return res.status(202).json({success:true,result:newDetails})
+
+    }
+
+  } catch (error) {
+     console.log(error)
+     next(createCustomError(error.message))
+  }
+
 }

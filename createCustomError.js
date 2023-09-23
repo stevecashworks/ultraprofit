@@ -3,8 +3,8 @@ const createCustomError= (message, statusCode)=>{
         const errorMessage= message||"Oops something went wrong"
      
     class UserError extends Error{
-        
         constructor(){
+            super()
         this.message=errorMessage;
         this.code=code
     }
@@ -14,4 +14,4 @@ const createCustomError= (message, statusCode)=>{
 return new UserError()    
 
 }
-export default createCustomError
+export default createCustomError       

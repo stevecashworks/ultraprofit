@@ -1,5 +1,5 @@
 const SendUserError= (err,req,res,next)=>{
-const {message,statusCode}=err
-   return res.status(statusCode).json({success:false,result:message})
+const {message,code}=err
+   return res.status(code).json({success:false,result:message})
 }
 export default  SendUserError
