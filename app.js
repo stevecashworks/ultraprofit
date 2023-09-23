@@ -21,7 +21,7 @@ const startServer = async()=> {
   try {
     await connect_Db(process.env.mongo_uri)
     console.log("database connected successfully")
-    server.listen(port,()=>console.log(port))
+    server.listen(port,()=>console.log(`server is  listening on port ${port}`))
   }catch(error) {
     console.log(error.message)
   }
