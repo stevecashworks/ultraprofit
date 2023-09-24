@@ -55,9 +55,10 @@ export const getAllUsers=async(req,res,next)=>{
 export const login=async(req,res,next)=>{
   try{
     const {userName,password}=req.body
+    console.log(req.body)
     const thisUser=await user.findOne({userName})
     if(!thisUser){
-     return res.status(404).json({success:false,result:`Invalid email or password`})
+     return res.status(404).json({success:false,result:`Invalid user name or password`})
     }
     else{
       if(password!=thisUser.password){
@@ -105,6 +106,7 @@ if(!thisUser){
 }
 export const  updateUser=async(req,res,next)=>{
   const userId=req.params.id;
+  console.log({userId})
   try {
     const thisUser=await user.findById(userId);
     if(!thisUser){
