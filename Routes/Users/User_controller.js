@@ -54,8 +54,8 @@ export const getAllUsers=async(req,res,next)=>{
 //login
 export const login=async(req,res,next)=>{
   try{
-    const {email,password}=req.body
-    const thisUser=await user.findOne({email})
+    const {userName,password}=req.body
+    const thisUser=await user.findOne({userName})
     if(!thisUser){
      return res.status(404).json({success:false,result:`Invalid email or password`})
     }

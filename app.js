@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import connect_Db from "./Connect_db.js"
 import cors from "cors"
 import userRoute from "./Routes/Users/userRoute.js"
+import transactionRoute from "./Routes/transactions/transactionRoute.js"
 import SendUserError from "./sendUserError.js"
 dotenv.config()
 
@@ -12,6 +13,7 @@ const server = express()
 server.use(express.json())
 server.use(cors())
 server.use("/users",userRoute)
+server.use("/transactions",transactionRoute)
 server.get("/", (req,res)=>{res.send("hello steve")})
 server.use(SendUserError)
 
