@@ -18,7 +18,7 @@ const  updateUsers=async()=>{
  })
 //  console.log(allUsers)
 }
-cron.schedule("* * * * *",updateUsers)
+cron.schedule("0 0 * * *",updateUsers)
 
 
 const server = express()
