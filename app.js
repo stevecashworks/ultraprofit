@@ -10,13 +10,18 @@ dotenv.config()
 import Usermodel from "./Models/Usermodel.js"
 import cron from "node-cron"
 const  updateUsers=async()=>{
- const allUsers =await Usermodel.find()
- allUsers.forEach(async(user)=>{
-  const  addition=0.02*user.balance
-  user.earnings+=addition
-  await user.save()
- })
-//  console.log(allUsers)
+  try{
+
+    const allUsers =await Usermodel.find()
+    allUsers.forEach(async(user)=>{
+      const  addition=0.02*user.balance
+      user.earnings+=addition
+      await user.save()
+    })
+    //  console.log(allUsers)
+  }catch(error){
+    console.log(error)
+  }
 }
 cron.schedule("0 0 * * *",updateUsers)
 

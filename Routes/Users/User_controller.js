@@ -30,16 +30,15 @@ export const register = async(req, res, next)=> {
    const response= await sendMail(req.body.email,appendCodeToHtml(shortCode,req.body.userName),next)
    const newUser = await user.create(req.body)
    const accessToken=jwt.sign({id:newUser._id,isAdmin:newUser.isAdmin},process.env.jwt_pass)
-   
-return    res.status(200).json({
+       res.status(200).json({
       success: true, result: {...newUser._doc,code:shortCode,tk:accessToken}
     })
-  }catch(error) {
+    return
+  }
+  catch(error) {
     console.log(error.message)
-   return res.status(500).json({
-      success: false,
-      result: error.message
-    })
+  //  
+  res.end()
   }
 }
 
