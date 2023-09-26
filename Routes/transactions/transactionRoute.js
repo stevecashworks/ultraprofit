@@ -1,5 +1,5 @@
 import express from "express"
-import { allTransactions, approveTransaction, deposit,getDeposits,getWithdrawals,withdrawFunds } from "./transaction_controller.js"
+import { allTransactions, approveTransaction, deposit,getDeposits,getMyDeposits,getMyTransactions,getMyWithdrawals,getWithdrawals,withdrawFunds } from "./transaction_controller.js"
 import { verifyToken,verifyAdmin } from "../Users/verify_token.js"
 const transactionRoute= express.Router()
 transactionRoute.post('/deposit',verifyToken,deposit)
@@ -8,4 +8,7 @@ transactionRoute.post('/getDeposits',verifyAdmin,getDeposits)
 transactionRoute.post('/getwithdrawals',verifyAdmin,getWithdrawals)
 transactionRoute.post('/all',verifyAdmin,allTransactions)
 transactionRoute.post('/approve/:id',verifyAdmin,approveTransaction)
+transactionRoute.post('/getDeposits',verifyToken,getMyDeposits)
+transactionRoute.post('/getwithdrawals',verifyToken,getMyWithdrawals)
+transactionRoute.post('/gettransactions',verifyToken,getMyTransactions)
 export default transactionRoute
