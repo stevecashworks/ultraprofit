@@ -123,7 +123,7 @@ try {
 export const getMyDeposits= async(req,res,next)=>{
 try {
   const userId=req.user.id
-const myDeposits= await Usermodel.find({userId,transaction_type:"deposit"})
+const myDeposits= await transaction.find({userId,transaction_type:"deposit"})
 return res.status(200).json({success:true,result:myDeposits})
 } catch (error) {
   console.log(error.message)
@@ -148,7 +148,7 @@ return res.status(200).json({success:true,result:myDeposits})
 export const getMyWithdrawals= async(req,res,next)=>{
   try {
     const userId=req.user.id
-  const myDeposits= await Usermodel.find({userId,transaction_type:"withdrawal"})
+  const myDeposits= await transaction.find({userId,transaction_type:"withdrawal"})
   return res.status(200).json({success:true,result:myDeposits})
   } catch (error) {
     console.log(error.message)
@@ -160,7 +160,7 @@ export const getMyWithdrawals= async(req,res,next)=>{
   export const getMyTransactions= async(req,res,next)=>{
     try {
       const userId=req.user.id
-    const myDeposits= await Usermodel.find({userId})
+    const myDeposits= await transaction.find({userId})
     return res.status(200).json({success:true,result:myDeposits})
     } catch (error) {
       console.log(error.message)
