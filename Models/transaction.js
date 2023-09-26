@@ -11,6 +11,18 @@ const transactionSchema= new mongoose.Schema({
     amount:{
         type:Number,
         required:true
+    },
+    transaction_type:{
+        type:String,
+        enum:["withdrawal","deposit"]
+    },
+    source:{
+        type:String
+    },
+    status:{
+        type:String,
+        enum:["pending","approve","rejected"],
+        default:"pending"
     }
 
 },{timestamps:true})

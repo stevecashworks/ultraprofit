@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true,
+    unique:false
     
   },
   wallet_id: {
@@ -37,6 +38,10 @@ const userSchema = mongoose.Schema({
   isAdmin:{
     type:Boolean,
     default:false
+  },
+  referralBonus:{
+    type:Number,
+    default:0
   }
 
 

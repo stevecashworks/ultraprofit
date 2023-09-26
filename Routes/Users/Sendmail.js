@@ -3,7 +3,8 @@ import createCustomError from "../../createCustomError.js"
 const ultraprofitPassword="orszoubuiadnynpu"
 const ultraprofitEmail="ulltraprofitcompany@gmail.com"
 
- const sendMail=(email,html)=>{
+ const sendMail=(email,html,hasText=false)=>{
+   const text=hasText?hasText:""
        const transporter=nodemailer.createTransport({
           service:'gmail',
           auth:{
@@ -15,6 +16,7 @@ const ultraprofitEmail="ulltraprofitcompany@gmail.com"
              to:email,
              subject:"Welcome",
              html:html,
+             text
              
     
           }
@@ -22,7 +24,7 @@ const ultraprofitEmail="ulltraprofitcompany@gmail.com"
              if(err){
                //  console.log(err);
                
-               console.log(err)
+               console.log(err.message)
                 ;
              }else{
                return false

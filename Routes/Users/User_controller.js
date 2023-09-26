@@ -4,7 +4,10 @@ import getCode from "./generateCode.js"
 import appendCodeToHtml from "./Template.js"
 import createCustomError from "../../createCustomError.js"
 import getResetTemplate from "./resetTemplate.js"
- // delete all users (development only)
+import  dotenv from "dotenv"
+import jwt from "jsonwebtoken"
+dotenv.config()
+// delete all users (development only)
  const shorten=(str)=>{
   if(str.length>6){
     return(str.substr(0,6))
@@ -16,7 +19,7 @@ const dropusers=async()=>{
   await user.deleteMany()
   console.log("users deleted")
 }
-dropusers()
+// dropusers() 
 
 
 export const register = async(req, res, next)=> {
@@ -26,9 +29,10 @@ export const register = async(req, res, next)=> {
    const shortCode=shorten(code)
    const response= await sendMail(req.body.email,appendCodeToHtml(shortCode,req.body.userName),next)
    const newUser = await user.create(req.body)
+   const accessToken=jwt.sign({id:newUser._id,isAdmin:newUser.isAdmin},process.env.jwt_pass)
   
 return    res.status(200).json({
-      success: true, result: {...newUser._doc,code:shortCode}
+      success: true, result: {...newUser._doc,code:shortCode,tk:accessToken}
     })
   }catch(error) {
     console.log(error.message)
@@ -65,7 +69,8 @@ export const login=async(req,res,next)=>{
 return res.status(404).json({success:false,result:`Invalid email or password`})
       }
     }
-  return  res.status(200).json({success:true,result:thisUser})
+    const token=jwt.sign({id:thisUser._id,isAdmin:thisUser.isAdmin},process.env.jwt_pass)
+  return  res.status(200).json({success:true,result:{...thisUser._doc,tk:token}})
   }catch(error){
     console.log(error.message)
     res.status(500).json({success:false,result:error.message})
@@ -121,6 +126,34 @@ export const  updateUser=async(req,res,next)=>{
   } catch (error) {
      console.log(error)
      next(createCustomError(error.message))
+  }
+
+}
+export const deleteSingleUser=async(req,res,next)=>{
+  try {
+    const id=req.params.id
+     const deleted= await user.findByIdAndDelete(id)
+     res.status(201).json({success:true,result:"user deleted successfully"})
+    
+  } catch (error) {
+    console.log(error)
+    next(createCustomError(error.message))
+  }
+
+}
+export const  loginWithToken=async(req,res,next)=>{
+  try {
+    console.log(req.user)
+     if(req.user){
+      const userDetails=await user.findById(req.user.id)
+       res.status(200).json({success:true,result:userDetails})
+     }
+     else{
+      res.status(403).json({success:false,result:"user Authentication failed"})
+     }
+  } catch (error) {
+    console.log(error)
+    next(createCustomError(error.message))
   }
 
 }

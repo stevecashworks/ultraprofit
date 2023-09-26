@@ -5,15 +5,31 @@ import cors from "cors"
 import userRoute from "./Routes/Users/userRoute.js"
 import transactionRoute from "./Routes/transactions/transactionRoute.js"
 import SendUserError from "./sendUserError.js"
+import adminRoute from "./Routes/Users/admin/adminRoute.js"
 dotenv.config()
+import Usermodel from "./Models/Usermodel.js"
+import cron from "node-cron"
+const  updateUsers=async()=>{
+ const allUsers =await Usermodel.find()
+ allUsers.forEach(async(user)=>{
+  const  addition=0.02*user.balance
+  user.earnings+=addition
+  await user.save()
+ })
+//  console.log(allUsers)
+}
+cron.schedule("* * * * *",updateUsers)
+
 
 const server = express()
+
 
 // cross platform origins
 server.use(express.json())
 server.use(cors())
 server.use("/users",userRoute)
 server.use("/transactions",transactionRoute)
+server.use("/admin", adminRoute)
 server.get("/", (req,res)=>{res.send("hello steve")})
 server.use(SendUserError)
 
