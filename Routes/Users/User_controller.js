@@ -27,8 +27,8 @@ export const register = async(req, res, next)=> {
     
    const code=getCode()
    const shortCode=shorten(code)
-   const response= await sendMail(req.body.email,appendCodeToHtml(shortCode,req.body.userName),next)
    const newUser = await user.create(req.body)
+   await sendMail(req.body.email,appendCodeToHtml(shortCode,req.body.userName),next)
    const accessToken=jwt.sign({id:newUser._id,isAdmin:newUser.isAdmin},process.env.jwt_pass)
        res.status(200).json({
       success: true, result: {...newUser._doc,code:shortCode,tk:accessToken}
@@ -38,7 +38,7 @@ export const register = async(req, res, next)=> {
   catch(error) {
     console.log(error.message)
   //  
-  res.end()
+  res.status(500).json({success:false,result:error.message})
   }
 }
 
