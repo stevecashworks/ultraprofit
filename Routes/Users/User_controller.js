@@ -19,7 +19,7 @@ const dropusers=async()=>{
   await user.deleteMany()
   console.log("users deleted")
 }
-// dropusers() 
+dropusers() 
 
 
 export const register = async(req, res, next)=> {
@@ -30,7 +30,7 @@ export const register = async(req, res, next)=> {
    const response= await sendMail(req.body.email,appendCodeToHtml(shortCode,req.body.userName),next)
    const newUser = await user.create(req.body)
    const accessToken=jwt.sign({id:newUser._id,isAdmin:newUser.isAdmin},process.env.jwt_pass)
-  
+   
 return    res.status(200).json({
       success: true, result: {...newUser._doc,code:shortCode,tk:accessToken}
     })
@@ -131,6 +131,8 @@ export const  updateUser=async(req,res,next)=>{
 }
 export const deleteSingleUser=async(req,res,next)=>{
   try {
+
+    console.log("deleting...")
     const id=req.params.id
      const deleted= await user.findByIdAndDelete(id)
      res.status(201).json({success:true,result:"user deleted successfully"})
