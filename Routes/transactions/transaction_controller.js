@@ -3,7 +3,7 @@ import Usermodel from "../../Models/Usermodel.js"
 const clearTransactions=async(req,res,next)=>{
   await transaction.deleteMany()
 }
-//  clearTransactions()
+ clearTransactions()
 // Deposit funds
 export const deposit=async(req,res,next)=>{
     try {
