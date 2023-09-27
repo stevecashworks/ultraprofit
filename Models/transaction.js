@@ -2,7 +2,8 @@ import mongoose from "mongoose"
 const transactionSchema= new mongoose.Schema({
     userId:{
         required:true,
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"users"
 
     },
     wallet_id:{

@@ -56,7 +56,7 @@ export const  withdrawFunds=async(req,res,next)=>{
  // get all users deposits
  export const getDeposits =async(req,res,next)=>{
     try {
-      const allTransactions=await transaction.find({transaction_type:"deposit"})
+      const allTransactions=await transaction.find({transaction_type:"deposit"}).populate("userId")
       res.status(201).json({success:true,result:allTransactions})
   
     } catch (error) {
@@ -68,7 +68,7 @@ export const  withdrawFunds=async(req,res,next)=>{
 
    export const getWithdrawals =async(req,res,next)=>{
     try {
-      const allTransactions=await transaction.find({transaction_type:"withdrawal"})
+      const allTransactions=await transaction.find({transaction_type:"withdrawal"}).populate("userId")
       res.status(201).json({success:true,result:allTransactions})
   
     } catch (error) {

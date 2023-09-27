@@ -19,7 +19,7 @@ const dropusers=async()=>{
   await user.deleteMany()
   console.log("users deleted")
 }
-dropusers() 
+// dropusers() 
 
 
 export const register = async(req, res, next)=> {
