@@ -49,7 +49,7 @@ export const  withdrawFunds=async(req,res,next)=>{
 
   } catch (error) {
     console.log(error)
-    res.status(200).json({success:fakse,result:error.message})
+    res.status(200).json({success:false,result:error.message})
   }  
  }
 
@@ -168,4 +168,25 @@ export const getMyWithdrawals= async(req,res,next)=>{
       return res.staus(500).json({success:false,result:error.message})
     }
       
+    }
+    export const declineTransaction=async(req,res,next)=>{
+      try{
+        const  transactionId=req.params.id
+        const thisTransaction=await transaction.findById(transactionId)
+        if(!thisTransaction){
+          return res.status(404).json({success:false, result:"we couldn't process transcaction details"})
+        }else{
+            if(thisTransaction.status!="pending"){
+              return res.status(200).json({success:false,result:"Transaction has been proccessed"})
+            }
+            else{
+               const  newTransaction= await transaction.findByIdAndUpdate(transactionId,{$set:{status:"rejected"}},{new:true})
+              return res.status(200).json({success:true,result:newTransaction})
+            }
+        }
+      }catch(error){
+        console.log(error.message)
+       return res.status(500).json({success:false,result:error.message})
+      }
+
     }
