@@ -20,6 +20,6 @@ transactionRoute.post('/all',verifyAdmin,allTransactions)
 transactionRoute.post('/approve/:id',verifyAdmin,approveTransaction)
 transactionRoute.post('/decline/:id',verifyAdmin,declineTransaction)
 transactionRoute.post('/getmyDeposits',verifyToken,getMyDeposits)
-transactionRoute.post('/getwithdrawals',verifyToken,getMyWithdrawals)
+transactionRoute.post('/getmywithdrawals',verifyToken,getMyWithdrawals)
 transactionRoute.post('/gettransactions',verifyToken,getMyTransactions)
 export default transactionRoute
