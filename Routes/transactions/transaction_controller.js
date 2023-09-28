@@ -82,6 +82,7 @@ export const approveTransaction=async(req,res,next)=>{
 try {
    const  transactionId=req.params.id;
     const thisTransaction=  await transaction.findById(transactionId)
+    const doNotremove=thisTransaction.source=="earnings"||thisTransaction.source=="referral bonus"
     if(!thisTransaction){
       return res.status(500).json({success:false,result:"Transaction not valid"})
     }
@@ -105,7 +106,10 @@ try {
           await Usermodel.findByIdAndUpdate(thisUser.referrer,{$inc:{referralBonus:addition}},{new:true})
          }  
         }
-         const addition=transaction_type=="deposit"?amount:amount*(-1)
+         let  addition=transaction_type=="deposit"?amount:amount*(-1)
+         if(doNotremove){
+          addition=0
+         }
          const newUserDetails= await Usermodel.findByIdAndUpdate(userId,{$inc:{balance:addition}},{new:true})
          const newTransactionDetails= await transaction.findByIdAndUpdate(transactionId,{$set:{status:"approved"}},{new:true}) 
          
