@@ -15,11 +15,6 @@ dotenv.config()
   return str
  }
 
-const dropusers=async()=>{
-  await user.deleteMany()
-  console.log("users deleted")
-}
-// dropusers() 
 
 
 export const register = async(req, res, next)=> {

@@ -1,9 +1,5 @@
 import transaction from "../../Models/transaction.js"
 import Usermodel from "../../Models/Usermodel.js"
-const clearTransactions=async(req,res,next)=>{
-  await transaction.deleteMany()
-}
-//  clearTransactions()
 // Deposit funds
 export const deposit=async(req,res,next)=>{
     try {
