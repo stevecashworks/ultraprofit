@@ -18,7 +18,7 @@ const  updateUsers=async()=>{
       user.earnings+=addition
       await user.save()
     })
-    //  console.log(allUsers)
+     console.log("users updated succefully")
   }catch(error){
     console.log(error)
   }
