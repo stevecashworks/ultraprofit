@@ -13,12 +13,15 @@ const  updateUsers=async()=>{
   try{
 
     const allUsers =await Usermodel.find()
+    const date=new Date()
+    const currentDate= date.toLocaleDateString()
     allUsers.forEach(async(user)=>{
       const  addition=0.02*user.balance
+
       user.earnings+=addition
       await user.save()
     })
-     console.log("users updated succefully")
+     console.log(`users updated succesfully last updated at: ${currentDate}`)
   }catch(error){
     console.log(error)
   }
