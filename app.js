@@ -9,6 +9,7 @@ import adminRoute from "./Routes/Users/admin/adminRoute.js"
 dotenv.config()
 import Usermodel from "./Models/Usermodel.js"
 import cron from "node-cron"
+console.log(`Date : ${new Date().toLocaleString()}`)
 const  updateUsers=async()=>{
   try{
 
@@ -21,12 +22,21 @@ const  updateUsers=async()=>{
       user.earnings+=addition
       await user.save()
     })
-     console.log(`users updated succesfully last updated at: ${currentDate}`)
+    //  console.log(`users updated succesfully last updated at: ${currentDate}`)
+    console.log("hello")
   }catch(error){
     console.log(error)
   }
 }
-cron.schedule("0 0 * * *",updateUsers)
+
+// schedule my 
+try{
+
+  const task=cron.schedule("* * * * *",updateUsers)
+  task.start()
+}catch(error){
+  console.log(error)
+}
 
 
 const server = express()
