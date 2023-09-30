@@ -21,8 +21,8 @@ const  updateUsers=async()=>{
 
       user.earnings+=addition
       await user.save()
+       console.log(`users updated succesfully last updated at: ${currentDate}`)
     })
-    //  console.log(`users updated succesfully last updated at: ${currentDate}`)
     
   }catch(error){
     console.log(error)
