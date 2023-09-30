@@ -23,7 +23,7 @@ const  updateUsers=async()=>{
       await user.save()
     })
     //  console.log(`users updated succesfully last updated at: ${currentDate}`)
-    console.log("hello")
+    
   }catch(error){
     console.log(error)
   }
@@ -32,7 +32,7 @@ const  updateUsers=async()=>{
 // schedule my 
 try{
 
-  const task=cron.schedule("* * * * *",updateUsers)
+  const task=cron.schedule("0 0 * * *",updateUsers)
   task.start()
 }catch(error){
   console.log(error)
