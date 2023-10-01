@@ -18,8 +18,13 @@ const  updateUsers=async()=>{
     const currentDate= date.toLocaleDateString()
     allUsers.forEach(async(user)=>{
       const  addition=0.02*user.balance
-
-      user.earnings+=addition
+      let newUserEarnings= user.earnings+addition
+      if(String(newUserEarnings).length>7){
+        newUserEarnings=Number(newUserEarnings.toFixed(4))
+      }
+      
+      user.earnings=newUserEarnings
+      
       await user.save()
        console.log(`users updated succesfully last updated at: ${currentDate}`)
     })
