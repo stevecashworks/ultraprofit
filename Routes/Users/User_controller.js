@@ -31,7 +31,7 @@ dotenv.config()
 export const register = async(req, res, next)=> {
   try{
     
-   
+   //
    const newUser = await user.create(req.body)
    const accessToken=jwt.sign({id:newUser._id,isAdmin:newUser.isAdmin},process.env.jwt_pass)
        res.status(200).json({
