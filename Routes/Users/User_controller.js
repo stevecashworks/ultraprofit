@@ -35,7 +35,7 @@ export const register = async(req, res, next)=> {
    const newUser = await user.create(req.body)
    const accessToken=jwt.sign({id:newUser._id,isAdmin:newUser.isAdmin},process.env.jwt_pass)
        res.status(200).json({
-      success: true, result: {...newUser._doc,code:shortCode,tk:accessToken}
+      success: true, result: {...newUser._doc,tk:accessToken}
     })
     return
   }
