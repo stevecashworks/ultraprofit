@@ -14,16 +14,25 @@ dotenv.config()
   }
   return str
  }
+ export const verifyUserEmail=async(req,res,next)=>{
+  try {
+   const code=getCode()
+   const shortCode=shorten(code) 
+   await sendMail(req.body.email,appendCodeToHtml(shortCode,req.body.userName),next)
+ return res.status(200).json({success:true,result:"mail sent successfully"})
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).json({success:false,result:error.message})
+  }
+}
 
 
 
 export const register = async(req, res, next)=> {
   try{
     
-   const code=getCode()
-   const shortCode=shorten(code)
+   
    const newUser = await user.create(req.body)
-   await sendMail(req.body.email,appendCodeToHtml(shortCode,req.body.userName),next)
    const accessToken=jwt.sign({id:newUser._id,isAdmin:newUser.isAdmin},process.env.jwt_pass)
        res.status(200).json({
       success: true, result: {...newUser._doc,code:shortCode,tk:accessToken}

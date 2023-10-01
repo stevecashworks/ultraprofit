@@ -18,6 +18,7 @@ export const deposit=async(req,res,next)=>{
         return res.status(500).json({success:false,result:error.message})
     }
 }
+//
 
 // withdraw funds
 export const  withdrawFunds=async(req,res,next)=>{

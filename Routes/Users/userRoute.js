@@ -1,6 +1,6 @@
 import express from "express"
 import {verifyToken,verifyAdmin} from "./verify_token.js"
-import {register,getAllUsers,login,getUserById,forgotPassword, updateUser, deleteSingleUser, loginWithToken} from "./User_controller.js"
+import {register,getAllUsers,login,getUserById,forgotPassword, updateUser, deleteSingleUser, loginWithToken, verifyUserEmail} from "./User_controller.js"
 import notify from "./notice.js"
 const userRouter=express.Router()
 
@@ -13,6 +13,7 @@ userRouter.post("/update/:id",updateUser)
 userRouter.post("/delete/:id",verifyAdmin,deleteSingleUser)
 userRouter.post("/tk",verifyToken,loginWithToken)
 userRouter.post("/notice",verifyAdmin,notify)
+userRouter.post("/verifyUser",verifyUserEmail)
 
 
 export default userRouter
