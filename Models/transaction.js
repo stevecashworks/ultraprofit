@@ -24,6 +24,19 @@ const transactionSchema= new mongoose.Schema({
         type:String,
         enum:["pending","approved","rejected"],
         default:"pending"
+    },
+    baseCurrency:{
+        type:String,
+        enum: ["naira","dollar"]
+    },
+    bankName:{
+        type:String
+    },
+    accountName:{
+        type:String
+    },
+    accountNumber:{
+        type:String
     }
 
 },{timestamps:true})
