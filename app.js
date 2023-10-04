@@ -17,8 +17,8 @@ const  updateUsers=async()=>{
     const date=new Date()
     const currentDate= date.toLocaleDateString()
     allUsers.forEach(async(user)=>{
-      const  addition=0.02*user.balance
-      let newUserEarnings= user.earnings+addition
+      const  addition=0.02*Number(user.balance)
+      let newUserEarnings= Number(user.earnings)+Number(addition)
       if(String(newUserEarnings).length>7){
         newUserEarnings=Number(newUserEarnings.toFixed(4))
       }

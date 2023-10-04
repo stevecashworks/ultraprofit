@@ -148,7 +148,6 @@ export const deleteSingleUser=async(req,res,next)=>{
 }
 export const  loginWithToken=async(req,res,next)=>{
   try {
-    console.log(req.user)
      if(req.user){
       const userDetails=await user.findById(req.user.id)
        res.status(200).json({success:true,result:userDetails})
