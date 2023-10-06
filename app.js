@@ -10,6 +10,8 @@ dotenv.config()
 import Usermodel from "./Models/Usermodel.js"
 import cron from "node-cron"
 console.log(`Date : ${new Date().toLocaleString()}`)
+let date= new Date()
+
 const  updateUsers=async()=>{
   try{
 
@@ -35,17 +37,23 @@ const  updateUsers=async()=>{
 }
 
 // schedule my 
-try{
-
-  const task=cron.schedule("0 0 * * *",updateUsers)
-  task.start()
-}catch(error){
-  console.log(error)
-}
 
 
 const server = express()
 
+setInterval(()=>{
+ const  currentDate=new Date()
+ const aDayHasPassed=currentDate.getDay()>date.getDay() 
+ if(aDayHasPassed){
+  date=new Date()
+  console.log("A day has passed")
+  updateUsers()
+ }
+ else{
+  console.log("It's not up to a minute yet only an hour has passed")
+
+ }
+},3600000)
 
 // cross platform origins
 server.use(express.json())
