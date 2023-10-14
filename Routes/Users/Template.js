@@ -44,4 +44,4 @@ const appendCodetoHtml=(code, userName)=>{
 </html>
 `
 }
-export default appendCodetoHtml
+module.exports= appendCodetoHtml

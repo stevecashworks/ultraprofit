@@ -1,11 +1,11 @@
-import user from "../../Models/Usermodel.js"
-import sendMail from "./Sendmail.js"
-import getCode from "./generateCode.js"
-import appendCodeToHtml from "./Template.js"
-import createCustomError from "../../createCustomError.js"
-import getResetTemplate from "./resetTemplate.js"
-import  dotenv from "dotenv"
-import jwt from "jsonwebtoken"
+const user = require("../../Models/Usermodel.js")
+const sendMail = require("./Sendmail.js")
+const getCode = require("./generateCode.js")
+const appendCodeToHtml = require("./Template.js")
+const createCustomError = require("../../createCustomError.js")
+const getResetTemplate = require("./resetTemplate.js")
+const  dotenv = require("dotenv")
+const jwt = require("jsonwebtoken")
 dotenv.config()
 // delete all users (development only)
  const shorten=(str)=>{
@@ -14,7 +14,7 @@ dotenv.config()
   }
   return str
  }
- export const verifyUserEmail=async(req,res,next)=>{
+  const verifyUserEmail=async(req,res,next)=>{
   try {
    const code=getCode()
    const shortCode=shorten(code) 
@@ -27,8 +27,7 @@ dotenv.config()
 }
 
 
-
-export const register = async(req, res, next)=> {
+ const register = async(req, res, next)=> {
   try{
     
    //
@@ -46,7 +45,7 @@ export const register = async(req, res, next)=> {
   }
 }
 
-export const getAllUsers=async(req,res,next)=>{
+ const getAllUsers=async(req,res,next)=>{
   try{
     const  AllUsers=await user.find()
     res.status(200).json({success:true,result:AllUsers})
@@ -59,7 +58,7 @@ export const getAllUsers=async(req,res,next)=>{
 }
 
 //login
-export const login=async(req,res,next)=>{
+ const login=async(req,res,next)=>{
   try{
     const {userName,password}=req.body
     console.log(req.body)
@@ -79,7 +78,7 @@ return res.status(404).json({success:false,result:`Invalid email or password`})
     res.status(500).json({success:false,result:error.message})
   }
 }
-export const getUserById=async(req,res)=>{
+ const getUserById=async(req,res)=>{
   const {id}=req.params 
   try{
 const thisUser =await user.findById(id)
@@ -94,7 +93,7 @@ return res.status(500).json({success:true,result:error.message})
   }
   
 }
-export const forgotPassword=async(req,res,next)=>{
+ const forgotPassword=async(req,res,next)=>{
 try {
   const {email}=req.body
 const thisUser=await user.findOne({email})
@@ -112,7 +111,7 @@ if(!thisUser){
   
 
 }
-export const  updateUser=async(req,res,next)=>{
+ const  updateUser=async(req,res,next)=>{
   const userId=req.params.id;
   console.log({userId})
   try {
@@ -132,7 +131,7 @@ export const  updateUser=async(req,res,next)=>{
   }
 
 }
-export const deleteSingleUser=async(req,res,next)=>{
+ const deleteSingleUser=async(req,res,next)=>{
   try {
 
     console.log("deleting...")
@@ -146,7 +145,7 @@ export const deleteSingleUser=async(req,res,next)=>{
   }
 
 }
-export const  loginWithToken=async(req,res,next)=>{
+ const  loginWithToken=async(req,res,next)=>{
   try {
      if(req.user){
       const userDetails=await user.findById(req.user.id)
@@ -161,3 +160,4 @@ export const  loginWithToken=async(req,res,next)=>{
   }
 
 }
+module.exports={register,getAllUsers,login,getUserById,forgotPassword, updateUser, deleteSingleUser, loginWithToken, verifyUserEmail}

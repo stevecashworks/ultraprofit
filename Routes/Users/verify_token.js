@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
+const jwt = require("jsonwebtoken")
+const dotenv = require("dotenv")
 dotenv.config()
-export const verifyToken=async(req,res,next)=>{
+ const verifyToken=async(req,res,next)=>{
     try {
        
         const token= req.headers.token
@@ -24,7 +24,7 @@ export const verifyToken=async(req,res,next)=>{
     }
     
 }
-export const verifyAdmin=(req,res,next)=>{
+ const verifyAdmin=(req,res,next)=>{
     try {
        
         const token= req.headers.token
@@ -53,3 +53,4 @@ export const verifyAdmin=(req,res,next)=>{
     }
     
 }
+module.exports={verifyAdmin,verifyToken}

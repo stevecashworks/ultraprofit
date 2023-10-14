@@ -1,14 +1,13 @@
-import express from "express"
-import dotenv from "dotenv"
-import connect_Db from "./Connect_db.js"
-import cors from "cors"
-import userRoute from "./Routes/Users/userRoute.js"
-import transactionRoute from "./Routes/transactions/transactionRoute.js"
-import SendUserError from "./sendUserError.js"
-import adminRoute from "./Routes/Users/admin/adminRoute.js"
+const express = require("express")
+const dotenv = require("dotenv")
+const connect_Db = require("./Connect_db.js")
+const cors = require("cors")
+const userRoute = require("./Routes/Users/userRoute.js")
+const transactionRoute = require("./Routes/transactions/transactionRoute.js")
+const SendUserError = require("./sendUserError.js")
+const adminRoute = require("./Routes/Users/admin/adminRoute.js")
+const Usermodel = require("./Models/Usermodel.js")
 dotenv.config()
-import Usermodel from "./Models/Usermodel.js"
-import cron from "node-cron"
 console.log(`Date : ${new Date().toLocaleString()}`)
 let date= new Date()
 
@@ -50,7 +49,7 @@ setInterval(()=>{
   updateUsers()
  }
  else{
-  console.log("It's not up to a minute yet only an hour has passed")
+  console.log("It's not up to a day yet yet only an hour has passed")
 
  }
 },3600000)

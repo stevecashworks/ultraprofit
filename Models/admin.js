@@ -1,7 +1,7 @@
-import mongoose from "mongoose"
+const mongoose =require("mongoose")
 const adminSchema=mongoose.Schema({
     nairaPerDollar:Number,
     dollarPerNaira:Number,
     proof:String
 })
-export default mongoose.model("Admin",adminSchema)
+module.exports= mongoose.model("Admin",adminSchema)

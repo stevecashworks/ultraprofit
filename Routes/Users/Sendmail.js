@@ -1,5 +1,5 @@
-import nodemailer from "nodemailer"
-import createCustomError from "../../createCustomError.js"
+const  nodemailer = require("nodemailer")
+// import createCustomError from "../../createCustomError.js"
 const ultraprofitPassword="orszoubuiadnynpu"
 const ultraprofitEmail="ulltraprofitcompany@gmail.com"
 
@@ -33,4 +33,4 @@ const ultraprofitEmail="ulltraprofitcompany@gmail.com"
          
         }
  
- export default sendMail
+ module.exports= sendMail

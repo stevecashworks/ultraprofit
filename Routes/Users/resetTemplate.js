@@ -44,4 +44,4 @@ return`
 </html>
 `
 }
-export default  getResetTemplate
+module.exports=  getResetTemplate

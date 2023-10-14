@@ -1,6 +1,6 @@
-import Usermodel from "../../../Models/Usermodel.js"
-import adminModel from "../../../Models/admin.js"
-export const getStats=async(req,res,next)=>{
+const Usermodel = require("../../../Models/Usermodel.js")
+const adminModel = require("../../../Models/admin.js")
+ const getStats=async(req,res,next)=>{
     try {
         const total=await Usermodel.aggregate([{
            $group:{
@@ -16,7 +16,7 @@ export const getStats=async(req,res,next)=>{
     }
 
 }
-export const setRates=async(req,res,next)=>{
+ const setRates=async(req,res,next)=>{
     try {
         const allRates= await adminModel.updateMany({},{$set:req.body},{new:true})
         //  const  newRates= await adminModel.create({dollarPerNaira:0.001,nairaPerDollar:1000,proof:"nothing yet"})
@@ -27,7 +27,7 @@ export const setRates=async(req,res,next)=>{
 
     }
 }
-export const getRates=async(req,res,next)=>{
+ const getRates=async(req,res,next)=>{
     try {
         const rates= await adminModel.find()
          const rate= rates[0]
@@ -37,3 +37,4 @@ export const getRates=async(req,res,next)=>{
         res.status(500).json({success:false,result:error.message})
     }
 }
+module.exports= { getRates, getStats, setRates }

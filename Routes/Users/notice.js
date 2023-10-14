@@ -1,5 +1,5 @@
-import Usermodel from "../../Models/Usermodel.js";
-import sendMail from "./Sendmail.js";
+const Usermodel=("../../Models/Usermodel.js");
+const sendMail =require("./Sendmail.js");
 const notify=async(req,res,next)=>{
 try {
      const {message}=req.body
@@ -16,4 +16,4 @@ try {
     return res.status(500).json({success:false,result:error.message})
 }
 }
-export default notify
+module.exports= notify

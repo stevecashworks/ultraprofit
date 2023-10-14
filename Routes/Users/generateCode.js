@@ -9,4 +9,4 @@ const getCode=()=>{
 }
 return code.join("")
 }
-export default getCode
+module.exports= getCode

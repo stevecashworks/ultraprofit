@@ -1,7 +1,7 @@
-import transaction from "../../Models/transaction.js"
-import Usermodel from "../../Models/Usermodel.js"
+const transaction = require("../../Models/transaction.js")
+const Usermodel = require("../../Models/Usermodel.js")
 // Deposit funds
-export const deposit=async(req,res,next)=>{
+ const deposit=async(req,res,next)=>{
     try {
         const  id= req.user.id
         const userId=id
@@ -21,7 +21,7 @@ export const deposit=async(req,res,next)=>{
 //
 
 // withdraw funds
-export const  withdrawFunds=async(req,res,next)=>{
+ const  withdrawFunds=async(req,res,next)=>{
  try {
     const  id= req.user.id
         const userId=id
@@ -39,7 +39,7 @@ export const  withdrawFunds=async(req,res,next)=>{
 }
 
 //show All transactions (admins only)
- export const allTransactions=async(req,res,next)=>{
+  const allTransactions=async(req,res,next)=>{
   try {
     const allTransactions=await transaction.find()
     res.status(201).json({success:true,result:allTransactions})
@@ -51,7 +51,7 @@ export const  withdrawFunds=async(req,res,next)=>{
  }
 
  // get all users deposits
- export const getDeposits =async(req,res,next)=>{
+  const getDeposits =async(req,res,next)=>{
     try {
       const allTransactions=await transaction.find({transaction_type:"deposit"}).populate("userId")
       res.status(201).json({success:true,result:allTransactions})
@@ -63,7 +63,7 @@ export const  withdrawFunds=async(req,res,next)=>{
    }
    //get all users withdrawals
 
-   export const getWithdrawals =async(req,res,next)=>{
+    const getWithdrawals =async(req,res,next)=>{
     try {
       const allTransactions=await transaction.find({transaction_type:"withdrawal"}).populate("userId")
       res.status(201).json({success:true,result:allTransactions})
@@ -75,7 +75,7 @@ export const  withdrawFunds=async(req,res,next)=>{
    }
    
 
-export const approveTransaction=async(req,res,next)=>{
+ const approveTransaction=async(req,res,next)=>{
 try {
    const  transactionId=req.params.id;
     const thisTransaction=  await transaction.findById(transactionId)
@@ -121,7 +121,7 @@ try {
   return res.status(500).json({success:false,result:error.message})
 }
 }
-export const getMyDeposits= async(req,res,next)=>{
+ const getMyDeposits= async(req,res,next)=>{
 try {
   const userId=req.user.id
 const myDeposits= await transaction.find({userId,transaction_type:"deposit"})
@@ -146,7 +146,7 @@ return res.status(200).json({success:true,result:myDeposits})
 
 
 
-export const getMyWithdrawals= async(req,res,next)=>{
+ const getMyWithdrawals= async(req,res,next)=>{
   try {
     const userId=req.user.id
   const myDeposits= await transaction.find({userId,transaction_type:"withdrawal"})
@@ -158,7 +158,7 @@ export const getMyWithdrawals= async(req,res,next)=>{
   }
     
   }
-  export const getMyTransactions= async(req,res,next)=>{
+   const getMyTransactions= async(req,res,next)=>{
     try {
       const userId=req.user.id
     const myDeposits= await transaction.find({userId})
@@ -170,7 +170,7 @@ export const getMyWithdrawals= async(req,res,next)=>{
     }
       
     }
-    export const declineTransaction=async(req,res,next)=>{
+     const declineTransaction=async(req,res,next)=>{
       try{
         const  transactionId=req.params.id
         const thisTransaction=await transaction.findById(transactionId)
@@ -191,3 +191,14 @@ export const getMyWithdrawals= async(req,res,next)=>{
       }
 
     }
+    module.exports={ allTransactions,
+      approveTransaction,
+       declineTransaction,
+        deposit,
+        getDeposits,
+        getMyDeposits,
+        getMyTransactions,
+        getMyWithdrawals,
+        getWithdrawals,
+        withdrawFunds 
+     }

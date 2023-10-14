@@ -14,4 +14,4 @@ const createCustomError= (message, statusCode)=>{
 return new UserError()    
 
 }
-export default createCustomError       
+module.exports= createCustomError       

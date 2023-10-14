@@ -1,7 +1,7 @@
-import express from "express"
-import {verifyToken,verifyAdmin} from "./verify_token.js"
-import {register,getAllUsers,login,getUserById,forgotPassword, updateUser, deleteSingleUser, loginWithToken, verifyUserEmail} from "./User_controller.js"
-import notify from "./notice.js"
+const express = require("express")
+const {verifyToken,verifyAdmin} = require("./verify_token.js")
+const {register,getAllUsers,login,getUserById,forgotPassword, updateUser, deleteSingleUser, loginWithToken, verifyUserEmail} = require("./User_controller.js")
+const notify = require("./notice.js")
 const userRouter=express.Router()
 
 userRouter.post("/register",register)
@@ -16,4 +16,4 @@ userRouter.post("/notice",verifyAdmin,notify)
 userRouter.post("/verifyUser",verifyUserEmail)
 
 
-export default userRouter
+module.exports=userRouter
